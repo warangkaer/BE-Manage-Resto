@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 const bcrypt = require('bcrypt')
 
 module.exports = {
-  getUserByUsername: async ({ username }) => {
+  getUserByUsername: async ( username ) => {
     try {
       const user = await userModel.findOne({
         attributes: ['username', 'password', 'email', 'phoneNumber'],
@@ -15,7 +15,7 @@ module.exports = {
           },
         },
       });
-
+      // console.log(user)
       return user;
     } catch (err) {
       return err;
@@ -23,20 +23,16 @@ module.exports = {
   },
   
   createUser: async (req) => {
-    try{
-      const hashedPassword = await bcrypt.hash(req.password, 10)
+    const hashedPassword = await bcrypt.hash(req.password, 10)
 
-      const user = userModel.create({
-        fullname : req.fullname,
-        username : req.username,
-        email : req.email,
-        phoneNumber : req.phoneNumber,
-        password : hashedPassword
-      })
+    const user = userModel.create({
+      fullname : req.fullname,
+      username : req.username,
+      email : req.email,
+      phoneNumber : req.phoneNumber,
+      password : hashedPassword
+    })
 
-      return user
-    } catch (err) {
-      return err
-    }
+    return user
   }
 };

@@ -1,11 +1,12 @@
 const http = require('http')
 const express = require('express')
 const app = express()
-const dotenv = require('dotenv').config()
 const fileUpload = require('express-fileupload')
 
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
+require('dotenv').config()
 
 // cors
 app.use(cors())
@@ -27,7 +28,7 @@ app.use('/v1', authRoutes);
 app.get('/', (req, res) => {
   res.set('Content-Type', 'text/html');
   res.send(
-    Buffer.from('<h1><center>REST API For Restaurant Management</h1></center>')
+    Buffer.from('<center><h1>REST API For Restaurant Management</center>')
   );
 });
 
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 port = process.env.APP_PORT || 3000
 const httpServer = http.createServer(app)
 httpServer.listen(port, () => console.log(`server berjalan pada port ${port}`))
+httpServer.timeout = 10000
 
 
 
